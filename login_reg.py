@@ -6,14 +6,21 @@ class Login_System:
         self.root = root
         self.root.title("Lifechoices-online Login")
         self.root.geometry("1920x1080")
-        self.root.config(bg="#fafafa")
+        self.root.resizable(False, False)
+        # self.root.config(bg="#fafafa")
+
+
+
+        #======main frame=====
+        self.main_frame1 = Frame(self.root, bd=2, relief=RIDGE, bg="white")
+        self.main_frame1.place(x=0, y=0, width=1920, height=1080)
 
         # ====images====
         self.phone_image = ImageTk.PhotoImage(file="images/image.png")
-        self.lbl_phone_image = Label(self.root, image=self.phone_image, bg="#00b0f0", bd=0).place(x=0, y=0)
+        self.lbl_phone_image = Label(self.main_frame1, image=self.phone_image, bg="#00b0f0", bd=0).place(x=0, y=0)
 
         # =====Login Frame======
-        self.login_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
+        self.login_frame = Frame(self.main_frame1, bd=2, relief=RIDGE, bg="white")
         self.login_frame.place(x=750, y=170, width=400, height=600)
 
         # self.title = Label(self.login_frame, text="Lifechoices-online", font=("Elephant", 23, "bold"), bg="white").place(x=0, y=30, relwidth=1)
@@ -28,11 +35,11 @@ class Login_System:
 
         self.btn_login = Button(self.login_frame, text="Log in", font=("Arial Rounded MT Bold", 15), bg="#00b0f0", activebackground="#00b0f0", fg="white", activeforeground="white", cursor="hand2").place(x=50, y=370, width=300, height=35)
 
-        self.hr = Label(self.login_frame, bg="lightgrey").place(x=50, y=440, width=300, height=2)
+        self.hr = Label(self.login_frame, bg="lightgrey").place(x=50, y=460, width=300, height=2)
 
-        self.lbl_or = Label(self.login_frame, text="OR",bg="white", fg="lightgrey", font=("times new roman", 15, "bold")).place(x=180, y=425)
+        self.lbl_or = Label(self.login_frame, text="OR",bg="white", fg="lightgrey", font=("times new roman", 15, "bold")).place(x=180, y=445)
 
-        self.btn_forgot = Button(self.login_frame, text="Forgot Password?", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E").place(x=125, y=480)
+        self.btn_forgot = Button(self.login_frame, text="Administrator", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E").place(x=125, y=510)
 
         #=======frame 2=========
 
