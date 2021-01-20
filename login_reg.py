@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk
+import mysql.connector
 
 class Login_System:
     def __init__(self, root):
@@ -8,6 +9,8 @@ class Login_System:
         self.root.geometry("1920x1080")
         self.root.resizable(False, False)
         # self.root.config(bg="#fafafa")
+        self.mydb = mysql.connector.connect(user='lifechoices', password='@Lifechoices1234', host='127.0.0.1', database='Lifechoicesonline', auth_plugin='mysql_native_password')
+        self.mycursor = self.mydb.cursor()
 
         #======main frame=====
         self.main_frame1 = Frame(self.root, bd=0, relief=RIDGE, bg="white")
@@ -26,12 +29,14 @@ class Login_System:
         self.lbl_logo_image = Label(self.login_frame, image=self.logo_image, bg="black", bd=0).place(x=110, y=40)
 
         self.lbl_username = Label(self.login_frame, text="Username", font=("Elephant", 15), bg="white", fg="#767171").place(x=50, y=170)
-        self.txt_username = Entry(self.login_frame, font=("times new roman", 15), bg="#ECECEC").place(x=50, y=210, width=300)
+        self.txt_username = Entry(self.login_frame, font=("times new roman", 15), bg="#ECECEC")
+        self.txt_username.place(x=50, y=210, width=300)
 
         self.lbl_pass = Label(self.login_frame, text="Password", font=("Elephant", 15), bg="white", fg="#767171").place(x=50, y=270)
-        self.txt_pass = Entry(self.login_frame, font=("times new roman", 15), show="*", bg="#ECECEC").place(x=50, y=310, width=300)
+        self.txt_pass = Entry(self.login_frame, font=("times new roman", 15), show="*", bg="#ECECEC")
+        self.txt_pass.place(x=50, y=310, width=300)
 
-        self.btn_login = Button(self.login_frame, text="Log in", font=("Arial Rounded MT Bold", 15), bg="#00b0f0", activebackground="#00b0f0", fg="white", activeforeground="white", cursor="hand2").place(x=50, y=370, width=300, height=35)
+        self.btn_login = Button(self.login_frame, text="Log in", font=("Arial Rounded MT Bold", 15), bg="#00b0f0", activebackground="#00b0f0", fg="white", activeforeground="white", cursor="hand2", command=self.verify).place(x=50, y=370, width=300, height=35)
 
         self.hr = Label(self.login_frame, bg="lightgrey").place(x=50, y=460, width=300, height=2)
 
@@ -39,6 +44,20 @@ class Login_System:
 
         self.btn_forgot = Button(self.login_frame, text="Administrator", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E").place(x=125, y=510)
 
+
+    def verify(self):
+        self.email = self.txt_username.get()
+        self.password = self.txt_pass.get()
+
+        self.sql = "select * from users where email = %s and password =%s"
+        self.mycursor.execute(self.sql, [self.email, self.password])
+        self.results = self.mycursor.fetchall()
+        if self.results:
+            for i in self.results:
+                print("you have logged in successfully")
+                break;
+        else:
+            print("Login have failed")
         #=======frame 2=========
 
         # self.register_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")

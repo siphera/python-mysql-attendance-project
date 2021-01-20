@@ -77,3 +77,14 @@ label.pack()
 button = Tkinter.Button(frame1,text="Button") #Send some action to Label here
 button.pack()
 tk.mainloop()
+'''
+CREATE TABLE `users` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(60) NOT NULL,
+`surname` varchar(60) NOT NULL,
+`contact` varchar(60) NOT NULL,
+`email` varchar(60) NOT NULL,
+`department` varchar(60) NOT NULL,
+`password` varchar(60) NOT NULL,
+PRIMARY KEY (`email`));
+'''
