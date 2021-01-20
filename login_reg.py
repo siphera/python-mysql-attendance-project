@@ -9,10 +9,8 @@ class Login_System:
         self.root.resizable(False, False)
         # self.root.config(bg="#fafafa")
 
-
-
         #======main frame=====
-        self.main_frame1 = Frame(self.root, bd=2, relief=RIDGE, bg="white")
+        self.main_frame1 = Frame(self.root, bd=0, relief=RIDGE, bg="white")
         self.main_frame1.place(x=0, y=0, width=1920, height=1080)
 
         # ====images====
@@ -21,11 +19,11 @@ class Login_System:
 
         # =====Login Frame======
         self.login_frame = Frame(self.main_frame1, bd=2, relief=RIDGE, bg="white")
-        self.login_frame.place(x=750, y=170, width=400, height=600)
+        self.login_frame.place(x=759, y=170, width=400, height=600)
 
         # self.title = Label(self.login_frame, text="Lifechoices-online", font=("Elephant", 23, "bold"), bg="white").place(x=0, y=30, relwidth=1)
         self.logo_image = ImageTk.PhotoImage(file="images/logo1.png")
-        self.lbl_logo_image = Label(self.login_frame, image=self.logo_image, bg="black", bd=0).place(x=115, y=40)
+        self.lbl_logo_image = Label(self.login_frame, image=self.logo_image, bg="black", bd=0).place(x=110, y=40)
 
         self.lbl_username = Label(self.login_frame, text="Username", font=("Elephant", 15), bg="white", fg="#767171").place(x=50, y=170)
         self.txt_username = Entry(self.login_frame, font=("times new roman", 15), bg="#ECECEC").place(x=50, y=210, width=300)
@@ -48,9 +46,9 @@ class Login_System:
 
         # self.logo_image = ImageTk.PhotoImage(file="images/logo1.png")
         # self.lbl_logo_image = Label(self.register_frame, image=self.logo_image,bg="black", bd=0).place(x=10, y=0)
-
         # self.lbl_reg = Label(self.register_frame, text="Don't have an account?", font=("time new roman", 13), bg="white").place(x=40, y=20)
         # self.btn_signup = Button(self.register_frame, text="Sign up", font=("times new roman", 13), bg="white", fg="#00759E",bd=0, activebackground="white", activeforeground="#00759E").place(x=250, y=17)
+
 
 root = Tk()
 obj = Login_System(root)
