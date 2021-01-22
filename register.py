@@ -17,8 +17,8 @@ class Register:
         self.main_frame2.place(x=0, y=0, width=1920, height=1080)
 
         # ===== background image=====
-        self.phone_image = ImageTk.PhotoImage(file="images/image.png")
-        self.lbl_phone_image = Label(self.main_frame2, image=self.phone_image, bg="#00b0f0", bd=0).place(x=0, y=0, relwidth=1, relheight=1)
+        self.bg_image = ImageTk.PhotoImage(file="images/image.png")
+        self.lbl_bg_image = Label(self.main_frame2, image=self.bg_image, bg="#00b0f0", bd=0).place(x=0, y=0, relwidth=1, relheight=1)
 
         # ===== side image=====
         self.side_image = ImageTk.PhotoImage(file="images/side3.png")

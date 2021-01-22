@@ -17,8 +17,8 @@ class Login_System:
         self.main_frame1.place(x=0, y=0, width=1920, height=1080)
 
         # ====images====
-        self.phone_image = ImageTk.PhotoImage(file="images/image.png")
-        self.lbl_phone_image = Label(self.main_frame1, image=self.phone_image, bg="#00b0f0", bd=0).place(x=0, y=0)
+        self.bg_image = ImageTk.PhotoImage(file="images/image.png")
+        self.lbl_bg_image = Label(self.main_frame1, image=self.bg_image, bg="#00b0f0", bd=0).place(x=0, y=0)
 
         # =====Login Frame======
         self.login_frame = Frame(self.main_frame1, bd=2, relief=RIDGE, bg="white")
@@ -58,6 +58,7 @@ class Login_System:
                 break;
         else:
             print("Login have failed")
+
         #=======frame 2=========
 
         # self.register_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
