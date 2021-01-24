@@ -1,6 +1,5 @@
 from tkinter import *
 from PIL import ImageTk
-from tkinter import messagebox
 import mysql.connector
 
 class Login_System:
@@ -25,9 +24,11 @@ class Login_System:
         self.login_frame = Frame(self.main_frame1, bd=2, relief=RIDGE, bg="white")
         self.login_frame.place(x=759, y=170, width=400, height=600)
 
-        # self.title = Label(self.login_frame, text="Lifechoices-online", font=("Elephant", 23, "bold"), bg="white").place(x=0, y=30, relwidth=1)
-        self.logo_image = ImageTk.PhotoImage(file="images/logo1.png")
-        self.lbl_logo_image = Label(self.login_frame, image=self.logo_image, bg="black", bd=0).place(x=110, y=40)
+        self.logo_image = ImageTk.PhotoImage(file="images/admin.png")
+        self.lbl_logo_image = Label(self.login_frame, image=self.logo_image,bg="white", bd=0).place(x=150, y=20)
+
+        self.lbl_admin_txt = Label(self.login_frame, text="ADMIN", bg="white", fg="lightgrey", font=("times new roman", 14, "bold")).place(x=170, y=117)
+
 
         self.lbl_username = Label(self.login_frame, text="Username", font=("Elephant", 15), bg="white", fg="#767171").place(x=50, y=170)
         self.txt_username = Entry(self.login_frame, font=("times new roman", 15), bg="#ECECEC")
@@ -43,7 +44,7 @@ class Login_System:
 
         self.lbl_or = Label(self.login_frame, text="OR",bg="white", fg="lightgrey", font=("times new roman", 15, "bold")).place(x=180, y=445)
 
-        self.btn_admin = Button(self.login_frame, text="Administrator", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E", command=self.admin_frame).place(x=125, y=510)
+        self.btn_user_login = Button(self.login_frame, text="USER LOGIN", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E").place(x=135, y=510)
 
 
     def verify(self):
@@ -55,15 +56,10 @@ class Login_System:
         self.results = self.mycursor.fetchall()
         if self.results:
             for i in self.results:
-                messagebox.showinfo('SUCCESS', "you have logged in successfully")
+                print("you have logged in successfully")
                 break;
         else:
-            messagebox.showerror("FAILED", "Login failed please enter correct username and password")
-
-
-    def admin_frame(self):
-        import admin
-        admin.mainloop()
+            print("Login have failed")
 
         #=======frame 2=========
 

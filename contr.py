@@ -17,8 +17,6 @@ class Login_System:
         self.main_frame3 = Frame(self.root, bd=0, relief=RIDGE, bg="white")
         self.main_frame3.place(x=0, y=0, width=1920, height=1080)
 
-
-
         # ====images====
         self.bg_image = ImageTk.PhotoImage(file="images/image.png")
         self.lbl_bg_image = Label(self.main_frame3, image=self.bg_image, bg="#00b0f0", bd=0).place(x=0, y=0)
@@ -36,7 +34,7 @@ class Login_System:
 
         self.lbl_department = Label(self.filter_frame, text="Department", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=270, y=15)
         self.cmb_department = ttk.Combobox(self.filter_frame, font=("times new roman", 13, "bold"), state='readonly', justify=CENTER)
-        self.cmb_department['values'] = ("Select", "Lecture", "Academy", "Studio", "Finance")
+        self.cmb_department['values'] = ("Select", "All", "Lecture", "Academy", "Studio", "Finance")
         self.cmb_department.place(x=270, y=45, height=28)
         self.cmb_department.current(0)
 
@@ -60,10 +58,10 @@ class Login_System:
                        background=[('selected', '#00b0f0')])
         self.my_tree = ttk.Treeview(self.treeview_frame)
 
-        # =====>creating columns<====
+        # =====>creating columns<======
         self.my_tree['columns'] = ("Name", "Surname", "Email", "Time-IN", "Time-OUT")
 
-        # =====>layering columns<====
+        # =====>layering columns<=======
         self.my_tree.column("#0", width=0, stretch=NO)
         self.my_tree.column("Name", anchor=W, width=200)
         self.my_tree.column("Surname", anchor=W, width=200)
@@ -79,39 +77,17 @@ class Login_System:
         self.my_tree.heading("Time-IN", text="Time-IN", anchor=CENTER)
         self.my_tree.heading("Time-OUT", text="Time-OUT", anchor=CENTER)
 
-        # =====Insert data=====
-        data = [
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["siphe", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["nkura", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["Johnathan", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sinethemba", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["Drake", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["Wayne", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["Jonj", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 30 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 35 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 31 PM"],
-            ["John", "salman", "salman@gmail.com", "10:30 AM", "15: 32 PM"],
-            ["sdfg", "salman", "salman@gmail.com", "10:30 AM", "15: 33 PM"]
-        ]
+
+
 
         # =====>Striped rows<====
         self.my_tree.tag_configure('oddrow', background="white")
         self.my_tree.tag_configure('evenrow', background="lightblue")
 
+        # =====Insert data=====
         self.count = 0
-        for record in data:
+        self.get_data = self.mycursor.execute('Select * from attendance')
+        for record in self.mycursor:
             if self.count % 2 == 0:
                 self.my_tree.insert(parent='', index='end', iid=self.count, text="", values=(record[0], record[1], record[2], record[3], record[4]), tags=('evenrow',))
             else:
