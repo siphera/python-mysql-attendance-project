@@ -86,6 +86,7 @@ class Register:
         for i in self.mycursor:
             print(i)
 
+
 root = Tk()
 obj = Register(root)
 root.mainloop()
