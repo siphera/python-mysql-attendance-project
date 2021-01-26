@@ -3,7 +3,7 @@ from PIL import ImageTk
 from tkinter import ttk
 import mysql.connector
 
-class Login_System:
+class Update_page:
     def __init__(self, root):
         self.root = root
         self.root.title("Lifechoices-online | Manage | Update | Remove")
@@ -32,8 +32,7 @@ class Login_System:
         self.email_filter = Entry(self.filter_frame, font=("times new roman", 15, "bold"), bg="lightgray")
         self.email_filter.place(x=30, y=45)
 
-        self.lbl_or = Label(self.filter_frame, text="OR",bg="white", fg="lightgrey", font=("times new roman", 12, "bold")).place(x=240, y=49)
-
+        self.lbl_or = Label(self.filter_frame, text="OR", bg="white", fg="lightgrey", font=("times new roman", 12, "bold")).place(x=240, y=49)
 
         self.lbl_department = Label(self.filter_frame, text="Department", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=270, y=15)
         self.cmb_department = ttk.Combobox(self.filter_frame, font=("times new roman", 13, "bold"), state='readonly', justify=CENTER)
@@ -46,7 +45,7 @@ class Login_System:
         self.lbl_count = Label(self.filter_frame, text="Count Results:", font=("times new roman", 25, "bold"), bg="white", fg="grey").place(x=680, y=40)
         self.lbl_show_count = Label(self.filter_frame, text="0", font=("times new roman", 32, "bold"), bg="white", fg="red").place(x=900, y=31)
 
-        # ======>Treeview frame<======
+        # ======>Treeview frame<======_________________________________________________________________________________________________
         self.treeview_frame = Frame(self.root, bd=0, relief=RIDGE, bg="white")
         self.treeview_frame.place(x=800, y=200, width=1000, height=750)
 
@@ -91,14 +90,15 @@ class Login_System:
         self.get_data = self.mycursor.execute('Select * from attendance')
         for record in self.mycursor:
             if self.count % 2 == 0:
-                self.my_tree.insert(parent='', index='end', iid=self.count, text="", values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags=('evenrow',))
+                self.my_tree.insert(parent='', index='end', iid=self.count, text="", values=(record[1], record[2], record[3], record[4], record[5], record[6]), tags=('evenrow',))
             else:
-                self.my_tree.insert(parent='', index='end', iid=self.count, text="", values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags=('oddrow',))
+                self.my_tree.insert(parent='', index='end', iid=self.count, text="", values=(record[1], record[2], record[3], record[4], record[5], record[6]), tags=('oddrow',))
             self.count += 1
 
         self.my_tree.place(x=0, y=0, height=760)
+        # >>>>>_____________________________________________________________________________________________________________________________<<<<
 
-        # ======>Edit Frame<========
+        # ======>Edit Frame<========__________________________________________________________________
         self.edit_frame = Frame(self.root, bd=0, relief=RIDGE, bg="white")
         self.edit_frame.place(x=100, y=200, width=660, height=750)
 
@@ -128,6 +128,7 @@ class Login_System:
 
         self.btn_edit_signin = Button(self.edit_frame, text="UPDATE SIGN-IN", font=("times new roman", 13), bg="#5C9158", activebackground="#5C9158", fg="white", activeforeground="white", cursor="hand2", command=self.signin).place(x=50, y=420)
         self.btn_edit_signout = Button(self.edit_frame, text="UPDATE SIGN-OUT", font=("times new roman", 13), bg="#F44B49", activebackground="#F44B49", fg="white", activeforeground="white", cursor="hand2", command=self.signout).place(x=350, y=420)
+        # >>>_______________________________________edit frame__________________________________________________________________________________<<<<<<
 
         # bind left mouse click to display the records on the side entries
         self.my_tree.bind("<ButtonRelease-1>", self.clicker)
@@ -136,10 +137,10 @@ class Login_System:
         for record in self.mycursor:
             if self.count % 2 == 0:
                 self.my_tree.insert(parent='', index='end', iid=self.count, text="",
-                                    values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags=('evenrow',))
+                                    values=(record[1], record[2], record[3], record[4], record[5], record[6]), tags=('evenrow',))
             else:
                 self.my_tree.insert(parent='', index='end', iid=self.count, text="",
-                                    values=(record[0], record[1], record[2], record[3], record[4], record[5]), tags=('oddrow',))
+                                    values=(record[1], record[2], record[3], record[4], record[5], record[6]), tags=('oddrow',))
             self.count += 1
 
     def filter(self):
@@ -178,15 +179,14 @@ class Login_System:
         self.select()
 
     def signin(self):
-        self.mycursor.execute('update attendance set signin = curtime() where email = "%s"' % self.txt_edit_email.get())
+        self.mycursor.execute('update attendance set signin=curtime() where email="%s" order by id desc limit 1' % self.txt_edit_email.get())
         self.mydb.commit()
 
     def signout(self):
-        print(self.txt_edit_email.get())
-        self.mycursor.execute('update attendance set signout = curtime() where email = "%s"' % self.txt_edit_email.get())
+        self.mycursor.execute('update attendance set signout=curtime() where email="%s" order by id desc limit 1' % self.txt_edit_email.get())
         self.mydb.commit()
 
 
 root = Tk()
-obj = Login_System(root)
+obj = Update_page(root)
 root.mainloop()

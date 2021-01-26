@@ -3,7 +3,7 @@ from PIL import ImageTk
 from tkinter import messagebox
 import mysql.connector
 
-class Login_System:
+class Admin_Login_page:
     def __init__(self, root):
         self.root = root
         self.root.title("Lifechoices-online Login")
@@ -56,26 +56,22 @@ class Login_System:
         if self.results:
             for i in self.results:
                 messagebox.showinfo('SUCCESS', "you have logged in successfully")
-                break;
+                break
+
+            self.root.destroy()
+            import contr
+
         else:
             messagebox.showerror("FAILED", "Login failed please enter correct username and password")
 
 
+
+
     def admin_frame(self):
+        self.root.destroy()
         import admin
-        admin.mainloop()
-
-        #=======frame 2=========
-
-        # self.register_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
-        # self.register_frame.place(x=720, y=570, width=350, height=400)
-
-        # self.logo_image = ImageTk.PhotoImage(file="images/logo1.png")
-        # self.lbl_logo_image = Label(self.register_frame, image=self.logo_image,bg="black", bd=0).place(x=10, y=0)
-        # self.lbl_reg = Label(self.register_frame, text="Don't have an account?", font=("time new roman", 13), bg="white").place(x=40, y=20)
-        # self.btn_signup = Button(self.register_frame, text="Sign up", font=("times new roman", 13), bg="white", fg="#00759E",bd=0, activebackground="white", activeforeground="#00759E").place(x=250, y=17)
 
 
 root = Tk()
-obj = Login_System(root)
+obj = Admin_Login_page(root)
 root.mainloop()

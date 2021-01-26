@@ -1,9 +1,10 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
+from tkinter import messagebox
 import mysql.connector
 
-class Register:
+class Register_page:
     def __init__(self, root):
         self.root = root
         self.root.title("Lifechoices-online Register")
@@ -34,23 +35,19 @@ class Register:
         self.txt_fname = Entry(self.reg_frame, font=("times new roman", 15, "bold"), bg="lightgray")
         self.txt_fname.place(x=50, y=130, width=250)
 
-        self.lbl_contact = Label(self.reg_frame, text="Contact No.", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=50, y=180)
-        self.txt_contact = Entry(self.reg_frame, font=("times new roman", 15, "bold"), bg="lightgray")
-        self.txt_contact.place(x=50, y=210, width=250)
-
         self.lbl_sname = Label(self.reg_frame, text="Surname", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=380, y=100)
         self.txt_sname = Entry(self.reg_frame, font=("times new roman", 15, "bold"), bg="lightgray")
         self.txt_sname.place(x=380, y=130, width=250)
 
-        self.lbl_email = Label(self.reg_frame, text="Email", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=380, y=180)
+        self.lbl_email = Label(self.reg_frame, text="Email", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=50, y=180)
         self.txt_email = Entry(self.reg_frame, font=("times new roman", 15, "bold"), bg="lightgray")
-        self.txt_email.place(x=380, y=210, width=250)
+        self.txt_email.place(x=50, y=210, width=250)
 
-        self.lbl_department = Label(self.reg_frame, text="Department", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=285, y=260)
-        self.cmb_department = ttk.Combobox(self.reg_frame, font=("times new roman", 13, "bold"), state='readonly', justify=CENTER)
-        self.cmb_department['values'] = ("Select", "Lecture", "Academy", "Studio", "Finance")
-        self.cmb_department.place(x=210, y=290, width=250)
-        self.cmb_department.current(0)
+        self.lbl_role = Label(self.reg_frame, text="Role", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=380, y=180)
+        self.cmb_role = ttk.Combobox(self.reg_frame, font=("times new roman", 13, "bold"), state='readonly', justify=CENTER)
+        self.cmb_role['values'] = ("Select", "Admin", "User")
+        self.cmb_role.place(x=380, y=210, width=250)
+        self.cmb_role.current(0)
 
         self.lbl_password = Label(self.reg_frame, text="Password", font=("times new roman", 15, "bold"), bg="white", fg="gray").place(x=50, y=340)
         self.txt_password = Entry(self.reg_frame, font=("times new roman", 15, "bold"), bg="lightgray", show="*")
@@ -67,26 +64,28 @@ class Register:
 
         self.name = self.txt_fname.get()
         self.surname = self.txt_sname.get()
-        self.contact = self.txt_contact.get()
         self.email = self.txt_email.get()
-        self.department = self.cmb_department.get()
+        self.role = self.cmb_role.get()
         self.password = self.txt_password.get()
+        try:
+            if self.password != self.txt_confirm_pword.get():
+                messagebox.showinfo("ERROR", "password does not match")
+            elif len(self.name) <= 0 or len(self.surname) <=0 or len(self.email) <=0 or len(self.role) <= 0 or len(self.password) <=0 or len(self.txt_confirm_pword.get()) <= 0:
+                messagebox.showerror('Input Error', 'Please make sure all the inputs are filled')
+            else:
+                self.add_user = """INSERT INTO Lifechoicesonline.users 
+                                                          (name, surname, email, role, password) 
+                                                          VALUES (%s, %s, %s, %s, %s)"""
 
-        self.add_user = """INSERT INTO Lifechoicesonline.users 
-                          (name, surname, contact, email, department, password) 
-                          VALUES (%s, %s, %s, %s, %s, %s)"""
+                self.val = (self.name, self.surname, self.email, self.role, self.password)
+                self.mycursor.execute(self.add_user, self.val)
+                self.mydb.commit()
+                messagebox.showinfo("SUCCESS", f"{self.name} has registered to the system")
+        except:
+            pass
 
-        self.val = (self.name, self.surname, self.contact, self.email, self.department, self.password)
-        self.mycursor.execute(self.add_user, self.val)
-
-        self.mydb.commit()
-
-        print(self.mycursor.rowcount, "record inserted")
-        xy = self.mycursor.execute('Select * from users')
-        for i in self.mycursor:
-            print(i)
 
 
 root = Tk()
-obj = Register(root)
+obj = Register_page(root)
 root.mainloop()

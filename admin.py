@@ -1,10 +1,11 @@
 from tkinter import *
 from PIL import ImageTk
+from tkinter import messagebox
 import mysql.connector
 
-class Login_System:
-    def __init__(self, root):
-        self.root = root
+class User_login_page:
+    def __init__(self, master):
+        self.root = master
         self.root.title("Lifechoices-online Login")
         self.root.geometry("1920x1080")
         self.root.resizable(False, False)
@@ -44,7 +45,7 @@ class Login_System:
 
         self.lbl_or = Label(self.login_frame, text="OR",bg="white", fg="lightgrey", font=("times new roman", 15, "bold")).place(x=180, y=445)
 
-        self.btn_user_login = Button(self.login_frame, text="USER LOGIN", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E").place(x=135, y=510)
+        self.btn_user_login = Button(self.login_frame, text="USER LOGIN", font=("times new roman", 13), bg="white", fg="#00759E", bd=0, activebackground="white", activeforeground="#00759E", command=self.back).place(x=135, y=510)
 
 
     def verify(self):
@@ -56,22 +57,16 @@ class Login_System:
         self.results = self.mycursor.fetchall()
         if self.results:
             for i in self.results:
-                print("you have logged in successfully")
+                messagebox.showinfo("SUCCESS", "you have logged in successfully")
                 break;
         else:
-            print("Login have failed")
+            messagebox.showerror("FAILED", "Login failed please enter correct username and password")
 
-        #=======frame 2=========
-
-        # self.register_frame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
-        # self.register_frame.place(x=720, y=570, width=350, height=400)
-
-        # self.logo_image = ImageTk.PhotoImage(file="images/logo1.png")
-        # self.lbl_logo_image = Label(self.register_frame, image=self.logo_image,bg="black", bd=0).place(x=10, y=0)
-        # self.lbl_reg = Label(self.register_frame, text="Don't have an account?", font=("time new roman", 13), bg="white").place(x=40, y=20)
-        # self.btn_signup = Button(self.register_frame, text="Sign up", font=("times new roman", 13), bg="white", fg="#00759E",bd=0, activebackground="white", activeforeground="#00759E").place(x=250, y=17)
+    def back(self):
+        self.root.destroy()
+        import login_reg
 
 
 root = Tk()
-obj = Login_System(root)
+obj = User_login_page(root)
 root.mainloop()
