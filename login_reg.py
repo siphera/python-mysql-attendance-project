@@ -64,9 +64,6 @@ class Admin_Login_page:
         else:
             messagebox.showerror("FAILED", "Login failed please enter correct username and password")
 
-
-
-
     def admin_frame(self):
         self.root.destroy()
         import admin

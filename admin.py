@@ -52,13 +52,16 @@ class User_login_page:
         self.email = self.txt_username.get()
         self.password = self.txt_pass.get()
 
-        self.sql = "select * from users where email = %s and password =%s"
+        self.sql = "select * from users where email = %s and password =%s and role='Admin'"
         self.mycursor.execute(self.sql, [self.email, self.password])
         self.results = self.mycursor.fetchall()
         if self.results:
             for i in self.results:
                 messagebox.showinfo("SUCCESS", "you have logged in successfully")
-                break;
+                break
+
+            self.root.destroy()
+            import register
         else:
             messagebox.showerror("FAILED", "Login failed please enter correct username and password")
 
