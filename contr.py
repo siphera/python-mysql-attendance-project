@@ -43,7 +43,13 @@ class Update_page:
         self.btn_filter = Button(self.filter_frame, text="FILTER RESULTS", font=("times new roman", 13), bg="#00b0f0", activebackground="#00b0f0", fg="white", activeforeground="white", cursor="hand2", command=self.filter).place(x=480, y=41)
 
         self.lbl_count = Label(self.filter_frame, text="Count Results:", font=("times new roman", 25, "bold"), bg="white", fg="grey").place(x=680, y=40)
-        self.lbl_show_count = Label(self.filter_frame, text="0", font=("times new roman", 32, "bold"), bg="white", fg="red").place(x=900, y=31)
+        self.lbl_show_count = Label(self.filter_frame, text="0", font=("times new roman", 32, "bold"), bg="white", fg="red")
+        self.lbl_show_count.place(x=900, y=31)
+
+        # show counter
+        self.mycursor.execute('Select COUNT(*) from attendance  where signout IS NULL;')
+        for c in self.mycursor:
+            self.lbl_show_count.config(text=c)
 
         # ======>Treeview frame<======_________________________________________________________________________________________________
         self.treeview_frame = Frame(self.root, bd=0, relief=RIDGE, bg="white")
@@ -179,7 +185,16 @@ class Update_page:
         self.select()
 
     def signin(self):
-        self.mycursor.execute('update attendance set signin=curtime() where email="%s" order by id desc limit 1' % self.txt_edit_email.get())
+        # get values form entries
+        self.fname = self.txt_edit_fname.get()
+        self.sname = self.txt_edit_sname.get()
+        self.edit_email = self.txt_edit_email.get()
+        self.edit_department = self.txt_edit_department.get()
+
+        self.signin_query = """insert into Lifechoicesonline.users (name, surname, email, department, signin) values (%s, %s, %s, %s, %s=curtime())"""
+        self.val = (self.fname, self.sname, self.edit_frame, self.edit_department)
+        self.mycursor.execute(self.signin_query, self.val)
+        # self.mycursor.execute('update attendance set signin=curtime() where email="%s" order by id desc limit 1' % self.txt_edit_email.get())
         self.mydb.commit()
 
     def signout(self):

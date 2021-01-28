@@ -85,7 +85,6 @@ class Register_page:
             pass
 
 
-
 root = Tk()
 obj = Register_page(root)
 root.mainloop()
