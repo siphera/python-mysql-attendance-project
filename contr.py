@@ -2,6 +2,8 @@ from tkinter import *
 from PIL import ImageTk
 from tkinter import ttk
 import mysql.connector
+from duplicity.dup_time import curtime
+
 
 class Update_page:
     def __init__(self, root):
@@ -132,8 +134,10 @@ class Update_page:
         self.txt_edit_signout = Entry(self.edit_frame, font=("times new roman", 15, "bold"), bg="lightgray")
         self.txt_edit_signout.place(x=350, y=360, width=250)
 
-        self.btn_edit_signin = Button(self.edit_frame, text="UPDATE SIGN-IN", font=("times new roman", 13), bg="#5C9158", activebackground="#5C9158", fg="white", activeforeground="white", cursor="hand2", command=self.signin).place(x=50, y=420)
-        self.btn_edit_signout = Button(self.edit_frame, text="UPDATE SIGN-OUT", font=("times new roman", 13), bg="#F44B49", activebackground="#F44B49", fg="white", activeforeground="white", cursor="hand2", command=self.signout).place(x=350, y=420)
+        self.btn_edit_signin = Button(self.edit_frame, text="UPDATE SIGN-IN", font=("times new roman", 13), bg="#5C9158", activebackground="#5C9158", fg="white", activeforeground="white", cursor="hand2", command=self.signin)
+        self.btn_edit_signin.place(x=50, y=420)
+        self.btn_edit_signout = Button(self.edit_frame, text="UPDATE SIGN-OUT", font=("times new roman", 13), bg="#F44B49", activebackground="#F44B49", fg="white", activeforeground="white", cursor="hand2", command=self.signout)
+        self.btn_edit_signout.place(x=350, y=420)
         # >>>_______________________________________edit frame__________________________________________________________________________________<<<<<<
 
         # bind left mouse click to display the records on the side entries
@@ -186,15 +190,16 @@ class Update_page:
 
     def signin(self):
         # get values form entries
-        self.fname = self.txt_edit_fname.get()
-        self.sname = self.txt_edit_sname.get()
-        self.edit_email = self.txt_edit_email.get()
-        self.edit_department = self.txt_edit_department.get()
+        self.fname = str(self.txt_edit_fname.get())
+        self.sname = str(self.txt_edit_sname.get())
+        self.edit_email = str(self.txt_edit_email.get())
+        self.edit_department = str(self.txt_edit_department.get())
 
-        self.signin_query = """insert into Lifechoicesonline.users (name, surname, email, department, signin) values (%s, %s, %s, %s, %s=curtime())"""
-        self.val = (self.fname, self.sname, self.edit_frame, self.edit_department)
-        self.mycursor.execute(self.signin_query, self.val)
-        # self.mycursor.execute('update attendance set signin=curtime() where email="%s" order by id desc limit 1' % self.txt_edit_email.get())
+        # self.signin_query = "insert into attendance (id, name, surname, email, department, signin) values (%s, %s, %s, %s, %s, %s)"
+        # self.val = (self.fname, self.sname, self.edit_email, self.edit_department)
+        # self.mycursor.execute(self.signin_query, self.val)
+        # self.time = curtime()
+        self.mycursor.execute('insert into attendance (name, surname, email, department, signin) values (%s,%s,%s,%s,%s)', (self.fname, self.sname, self.edit_email, self.edit_department, curtime))
         self.mydb.commit()
 
     def signout(self):
